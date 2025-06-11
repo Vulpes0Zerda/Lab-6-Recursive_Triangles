@@ -2,7 +2,6 @@ package triangle;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import static resizable.Debug.print;
 import resizable.ResizableImage;
 
 /**
@@ -20,7 +19,7 @@ import resizable.ResizableImage;
  */
 public class Triangle implements ResizableImage {
     
-    int drawTriangle = 0;
+    int drawDepth = 1;
 
     /**
      * change this method to implement the triangle!
@@ -28,17 +27,14 @@ public class Triangle implements ResizableImage {
      * @return an Image containing the Triangle
      */
     private BufferedImage drawTriangle(Dimension size) {
-        print("drawTriangle: " + ++drawTriangle + "size: " + size);
         BufferedImage bufferedImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D gBuffer = (Graphics2D) bufferedImage.getGraphics();
-        gBuffer.setColor(Color.black);
-        int border = 2;
-        gBuffer.drawRect(border, border, size.width - 2 * border, size.height - 2 * border);
-        gBuffer.setColor(Color.darkGray);
-        border = 8;
-        gBuffer.drawRect(border, border, size.width - 2 * border, size.height - 2 * border);
-        gBuffer.drawString("Triangle goes here", border * 2, border * 4);
+        gBuffer.setColor(getColorBySeed(drawDepth));
         return bufferedImage;
+    }
+
+    private Color getColorBySeed(int seed){
+        return new Color(seed*20 % 256 , seed*20+ 85% 256 , seed*20+ 170% 256);
     }
 
     BufferedImage bufferedImage;
